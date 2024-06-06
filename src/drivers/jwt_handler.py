@@ -1,18 +1,18 @@
 import jwt
 from typing import Dict
 from datetime import datetime, timedelta, timezone
-
+from configs.jwt_configs import jwt_infos
 
 class JwtHandler:
 
     def create_jwt_token(self, body: Dict = {}) -> str:
         token = jwt.encode(
             payload={
-                'exp': datetime.now(timezone.utc) + timedelta(minutes=1),
+                'exp': datetime.now(timezone.utc) + timedelta(hours=jwt_infos["JWT_HOURS"]),
                 **body,
             },
-            key="minhaChave",
-            algorithm="HS256"
+            key=jwt_infos["KEY"],
+            algorithm=jwt_infos["ALGORITHM"]
         )
         return token
     
